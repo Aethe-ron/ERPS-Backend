@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String    @id @default(uuid())
+  fName                    String
+  lName                    String
+  oName                    String?
+  email                    String    @unique
+  contact                  String    @unique
+  password                 String
+  profilePic               String?
+  idCard                   String?
+  bio                      String?
+  role                     Role      @default(USER)
+  isActive                 Boolean   @default(false)
+  activationToken          String?   @unique
+  activationTokenExpiresAt DateTime?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+}
+
+model LoginHistory {
+  id        String   @id @default(uuid())
+  userId    String?
+  email     String
+  status    String
+  message   String
+  ipAddress String
+  userAgent String
+  createdAt DateTime @default(now())
+}
+
+model Attendance {
+  id        String   @id @default(uuid())
+  name      String
+  region    String
+  address   String?
+  district  String
+  school    String
+  contact   String
+  createdAt DateTime @default(now())
+}
+
+model School {
+  id          String  @id @default(uuid())
+  region      String
+  district    String
+  code        String  @unique
+  institution String
+  location    String
+  address     String?
+  category    String
+  gender      String
+  center      String?
+  candidate   String?
+}
+
+enum Role {
+  USER
+  ADMIN
+  INVIGILATOR
+  SUPERVISOR
+  INSPECTOR
+  AAC
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  title     String
+  notes     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MalpracticStudents {
+  id                   String   @id @default(uuid())
+  candidateName        String
+  candidateIndexNumber String
+  typeOfMulpractices   String
+  invigilatorComment   String
+  createdAt            DateTime @default(now())
+}
+
+model InvigilatorsEndorsement {
+  id              String   @id @default(uuid())
+  invigilatorName String
+  comments        String
+  signature       String
+  createdAt       DateTime @default(now())
+}
+
+model Regulations {
+  id        String   @id @default(uuid())
+  section   String
+  createdAt DateTime @default(now())
+}
+
+model SecurityNote {
+  id        String   @id @default(uuid())
+  title     String
+  notes     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ExamAttendances {
+  id        String   @id @default(uuid())
+  fullName  String
+  gps       String
+  region    String
+  district  String
+  center    String
+  contact   String
+  signature String?
+  createdAt DateTime @default(now())
+}
+
+model Inventory {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+}
+
+model Monitoring {
+  id                  String   @id @default(uuid())
+  createdAt           DateTime @default(now())
+  centerName          String
+  centerNumber        String
+  PaperTitle          String
+  courseCode          String
+  container           String
+  locationOfContainer String
+  roomOfContainer     String
+  questionPapers      String
+  directionSign       String
+  notice              String
+  arrangement         String
+  spacing             String
+  seatingOrder        String
+  noiseLevel          String
+  light               String
+  temperature         String
+  environment         String
+  noHelpFulMateria    String
+  phone               String
+}
+
+model Incident {
+  id                   String   @id @default(uuid())
+  examination          String
+  region               String
+  district             String
+  centerName           String
+  centerNumber         String
+  subject              String
+  paperNumber          String
+  signature            String?
+  candidateName        String
+  candidateIndexNumber String
+  incidentNature       String
+  createdAt            DateTime @default(now())
+}
+
+model PaySheet {
+  id            String   @id @default(uuid())
+  officerName   String
+  position      String
+  examination   String
+  region        String
+  district      String
+  institution   String
+  center        String
+  amount        String
+  paymentStatus String
+  signature     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model OfficersDetail {
+  id           String   @id @default(uuid())
+  officersName String
+  contact      String
+  institution  String
+  centerNumber String
+  signature    String?
+  designation  String
+  district     String
+  centerName   String
+  examination  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model DepotKeepersDetails {
+  id            String   @id @default(uuid())
+  keepersName   String
+  keeperAddress String
+  contact       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Signout {
+  id                         String   @id @default(uuid())
+  normalAnswerBooklet        String
+  graphedAnswerBootLet       String
+  scannableAnswerBooklet     String
+  twine                      String
+  scissor                    String
+  pens                       String
+  permanetMaker              String
+  cellotape                  String
+  fieldFolder                String
+  invigilationcertMarkesheet String
+  padlocks                   String
+  scriptEnvelopes            String
+  pencil                     String
+  strawBooks                 String
+  createdAt                  DateTime @default(now())
+  updated                    DateTime @updatedAt
+}
